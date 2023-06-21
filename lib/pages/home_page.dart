@@ -37,9 +37,9 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: const [
-                WebsiteCard(text: "Google", url: "http://google.com"),
-                WebsiteCard(text: "Yahoo", url: "http://yahoo.com"),
-                WebsiteCard(text: "Times of India", url: "http://timesofindia.com"),
+                WebsiteCard(text: "Google", url: "http://google.com", image: "google.png"),
+                WebsiteCard(text: "YouTube", url: "http://youtube.com", image: "youtube.png"),
+                WebsiteCard(text: "Times of India", url: "http://timesofindia.com", image: "toi.png"),
               ],
             ),
           ),
