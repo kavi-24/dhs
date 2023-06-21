@@ -32,53 +32,45 @@ class _WebsiteCardState extends State<WebsiteCard> {
         await launchURL(widget.url);
       },
       child: Container(
-          margin: const EdgeInsets.all(8),
-          height: 100,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          // child: Center(
-          //   child: Text(
-          //     widget.text,
-          //     style: const TextStyle(
-          //       color: Colors.white,
-          //       fontSize: 20,
-          //     ),
-          //   ),
-          // ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                // Icon(
-                //   widget.icon ?? Icons.link,
-                //   color: Colors.white,
-                // ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
-                  padding: const EdgeInsets.all(8),
-                  child: Image.asset(
-                    "assets/images/${widget.image}",
-                    height: 50,
-                    width: 50,
-                  ),
+        margin: const EdgeInsets.all(8),
+        height: 100,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.blue,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 50.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // Icon(
+              //   widget.icon ?? Icons.link,
+              //   color: Colors.white,
+              // ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
                 ),
-                Text(
-                  widget.text,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                )
-              ],
-            ),
-          )),
+                padding: const EdgeInsets.all(8),
+                child: Image.asset(
+                  "assets/images/${widget.image}",
+                  height: 50,
+                  width: 50,
+                ),
+              ),
+              Text(
+                widget.text,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
