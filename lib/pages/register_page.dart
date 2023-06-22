@@ -18,6 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
       TextEditingController();
 
   final DatabaseHelper _databaseHelper = DatabaseHelper();
+  bool? obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                obscureText: true,
+                obscureText: obscureText!,
                 controller: _passwordController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -69,12 +70,28 @@ class _RegisterPageState extends State<RegisterPage> {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: _confirmPasswordController,
-                obscureText: true,
+                obscureText: obscureText!,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "Confirm Password",
                   hintText: "Enter Confirm Password",
                 ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(right: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Checkbox(
+                    value: !(obscureText!), onChanged: (val) {
+                      setState(() {
+                        obscureText = !(obscureText!);
+                      });
+                    }
+                  ),
+                  const Text("Show Password")
+                ],
               ),
             ),
             ElevatedButton(
@@ -113,9 +130,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 }
               },
               child: const Text("Sign Up"),
-            ),
-            const SizedBox(
-              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -16,6 +16,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
 
+  bool? obscureText = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                obscureText: true,
+                obscureText: obscureText!,
                 controller: _passwordController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -51,8 +53,21 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
+            Container(
+              margin: const EdgeInsets.only(right: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Checkbox(
+                    value: !(obscureText!), onChanged: (val) {
+                      setState(() {
+                        obscureText = !(obscureText!);
+                      });
+                    }
+                  ),
+                  const Text("Show Password")
+                ],
+              ),
             ),
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.center,
@@ -96,9 +111,6 @@ class _LoginPageState extends State<LoginPage> {
                 }
               },
               child: const Text("Login"),
-            ),
-            const SizedBox(
-              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
