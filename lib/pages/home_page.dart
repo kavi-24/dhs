@@ -49,9 +49,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const [
+                children: [
                   Text(
                     "Change Password",
                     style: TextStyle(
@@ -79,9 +79,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const [
+                children: [
                   Text(
                     "Logout",
                     style: TextStyle(
@@ -116,9 +116,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const [
+                children: [
                   Text(
                     "Delete User",
                     style: TextStyle(
@@ -150,12 +150,12 @@ class _HomePageState extends State<HomePage> {
           // ],
           // title: Text("Hello $_username"),
         ),
-        body: SafeArea(
+        body: const SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: const [
+              children: [
                 WebsiteCard(
                     text: "Google",
                     url: "http://google.com",
