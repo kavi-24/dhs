@@ -1,13 +1,17 @@
 class User {
-  final String username;
-  final String email;
-  final String password;
+  String? username;
+  String? email;
+  String? password;
 
   User({
-    required this.username,
-    required this.email,
-    required this.password,
+    this.username,
+    this.email,
+    this.password,
   });
+
+  User._privateConstructor();
+  static final User _instance = User._privateConstructor();
+  static User get instance => _instance;
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(

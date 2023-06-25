@@ -84,12 +84,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Checkbox(
-                    value: !(obscureText!), onChanged: (val) {
-                      setState(() {
-                        obscureText = !(obscureText!);
-                      });
-                    }
-                  ),
+                      value: !(obscureText!),
+                      onChanged: (val) {
+                        setState(() {
+                          obscureText = !(obscureText!);
+                        });
+                      }),
                   const Text("Show Password")
                 ],
               ),
@@ -112,11 +112,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   );
                 } else {
-                  await _databaseHelper.insertUser(User(
-                    username: _usernameController.text,
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                  ));
+                  await _databaseHelper.insertUser(
+                    User(
+                      username: _usernameController.text,
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                    ),
+                  );
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text("User registered successfully"),

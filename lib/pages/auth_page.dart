@@ -11,7 +11,6 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-
   bool isLoggedIn = true;
 
   getIsLoggedIn() async {
@@ -22,11 +21,10 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     getIsLoggedIn();
-    if (isLoggedIn) {
-      return const HomePage();
-    }
-    else {
+    if (!isLoggedIn) {
       return const LoginPage();
+    } else {
+      return const HomePage();
     }
   }
 }

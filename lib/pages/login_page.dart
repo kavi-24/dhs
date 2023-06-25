@@ -1,3 +1,5 @@
+import 'package:dhs/models/user_model.dart';
+import 'package:dhs/pages/forgot_pwd_page.dart';
 import 'package:dhs/pages/home_page.dart';
 import 'package:dhs/pages/register_page.dart';
 import 'package:dhs/services/database_helper.dart';
@@ -15,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
-
+  User user = User.instance;
   bool? obscureText = true;
 
   @override
@@ -59,12 +61,12 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Checkbox(
-                    value: !(obscureText!), onChanged: (val) {
-                      setState(() {
-                        obscureText = !(obscureText!);
-                      });
-                    }
-                  ),
+                      value: !(obscureText!),
+                      onChanged: (val) {
+                        setState(() {
+                          obscureText = !(obscureText!);
+                        });
+                      }),
                   const Text("Show Password")
                 ],
               ),
@@ -87,8 +89,13 @@ class _LoginPageState extends State<LoginPage> {
             // ),
             ElevatedButton(
               onPressed: () async {
-                bool crtLoginId = await _databaseHelper.checkUserPassword(_usernameController.text, _passwordController.text);
+                bool crtLoginId = await _databaseHelper.checkUserPassword(
+                    _usernameController.text, _passwordController.text);
                 if (crtLoginId) {
+                  String email = await _databaseHelper
+                      .getEmailByUsername(_usernameController.text);
+                  user.username = _usernameController.text;
+                  user.email = email;
                   SharedPrefs.setIsLoggedIn(true);
                   SharedPrefs.setCurrentUserName(_usernameController.text);
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -97,12 +104,14 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   );
                   await Future.delayed(const Duration(seconds: 1));
-                  Navigator.of(context)
-                      .pushReplacement(MaterialPageRoute(builder: (context) {
-                    return const HomePage();
-                  }));
-                }
-                else {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const HomePage();
+                      },
+                    ),
+                  );
+                } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text("Login Failed"),
@@ -118,15 +127,23 @@ class _LoginPageState extends State<LoginPage> {
                 const Text("Don't have an account?"),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) {
-                        return const RegisterPage();
-                      })
-                    );
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return const RegisterPage();
+                    }));
                   },
                   child: const Text("Sign Up"),
                 ),
               ],
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return ForgotPasswordPage();
+                }));
+              },
+              child: const Text("Forgot Password?"),
             ),
           ],
         ),

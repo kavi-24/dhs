@@ -2,7 +2,6 @@ import '/models/user_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
-
   Future<Database> database() async {
     return openDatabase(
       'users.db',
@@ -26,7 +25,7 @@ class DatabaseHelper {
   }
 
   // check if username or email already exists
-  Future<bool> checkUser(String username, String email) async {
+  Future<bool> checkUser(String? username, String? email) async {
     final Database db = await database();
     List<Map<String, dynamic>> users = await db.query(
       "USERS",
@@ -47,4 +46,37 @@ class DatabaseHelper {
     return users.isNotEmpty;
   }
 
+  // change password
+  Future<bool> changePassword(String username, String password) async {
+    final Database db = await database();
+    int result = await db.update(
+      "USERS",
+      {"password": password},
+      where: "username = ?",
+      whereArgs: [username],
+    );
+    return result != 0;
+  }
+
+  // get email by username
+  Future<String> getEmailByUsername(String username) async {
+    final Database db = await database();
+    List<Map<String, dynamic>> users = await db.query(
+      "USERS",
+      where: "username = ?",
+      whereArgs: [username],
+    );
+    return users[0]["email"];
+  }
+
+  // delete user
+  Future<bool> deleteUser(String username) async {
+    final Database db = await database();
+    int result = await db.delete(
+      "USERS",
+      where: "username = ?",
+      whereArgs: [username],
+    );
+    return result != 0;
+  }
 }

@@ -39,6 +39,7 @@ dependencies:
   sqflite:
   url_launcher:
   webview_flutter:
+  flutter_email_sender:
 
 dev_dependencies:
   flutter_test:
