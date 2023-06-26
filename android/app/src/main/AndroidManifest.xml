@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.dhs">
-    <!-- <queries> tag added to implement Email feature-->
+    <!-- <queries> tag added to implement Email feature -->
     <queries>
         <intent>
             <action android:name="android.intent.action.SENDTO" />
