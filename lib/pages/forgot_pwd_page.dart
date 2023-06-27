@@ -45,9 +45,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           !userNameExists
               ? ElevatedButton(
                   onPressed: () async {
-                    bool userNameExists = await _databaseHelper.checkUser(
+                    bool _userNameExists = await _databaseHelper.checkUser(
                         _usernameController.text, "");
-                    if (!userNameExists) {
+                    if (!_userNameExists) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text("Username does not exist"),
@@ -55,7 +55,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       );
                     }
                     setState(() {
-                      userNameExists = userNameExists;
+                      userNameExists = _userNameExists;
                     });
                   },
                   child: const Text("Check if username exists"),
