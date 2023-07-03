@@ -1,7 +1,9 @@
+import 'package:dhs/pages/barcode_scanner_page.dart';
 import 'package:dhs/pages/change_pwd_page.dart';
 import 'package:dhs/pages/login_page.dart';
 import 'package:dhs/services/database_helper.dart';
 import 'package:dhs/services/shared_prefs.dart';
+import 'package:dhs/widgets/drawer_item.dart';
 import 'package:dhs/widgets/website_card.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   final DatabaseHelper _databaseHelper = DatabaseHelper();
 
   @override
@@ -40,7 +41,22 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 20,
             ),
-            GestureDetector(
+            DrawerItem(
+              text: "Scan a barcode",
+              icon: Icons.barcode_reader,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BarcodeScannerPage(),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            DrawerItem(
               onTap: () {
                 Navigator.push(
                   context,
@@ -49,26 +65,15 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    "Change Password",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  Icon(
-                    Icons.lock,
-                    size: 30,
-                  ),
-                ],
-              ),
+              text: "Change Password",
+              icon: Icons.lock,
             ),
             const SizedBox(
               height: 40,
             ),
-            GestureDetector(
+            DrawerItem(
+              text: "Logout",
+              icon: Icons.logout,
               onTap: () {
                 SharedPrefs.setIsLoggedIn(false);
                 SharedPrefs.setCurrentUserName("");
@@ -79,26 +84,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    "Logout",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  Icon(
-                    Icons.logout,
-                    size: 30,
-                  ),
-                ],
-              ),
             ),
             const SizedBox(
               height: 40,
             ),
-            GestureDetector(
+            DrawerItem(
+              text: "Delete User",
+              icon: Icons.delete,
               onTap: () async {
                 String userName = await SharedPrefs.getCurrentUserName();
                 _databaseHelper.deleteUser(userName);
@@ -116,23 +108,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    "Delete User",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  Icon(
-                    Icons.delete,
-                    size: 30,
-                  ),
-                ],
-              ),
             ),
-            
           ],
         ),
         appBar: AppBar(

@@ -25,7 +25,8 @@ android\app\build.gradle:
 
  android {
   defaultConfig {
-    minSdkVersion 19        
+    minSdkVersion 19
+    multiDexEnabled true
    }      
  } 
 */

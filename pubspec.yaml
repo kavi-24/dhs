@@ -40,6 +40,8 @@ dependencies:
   url_launcher:
   webview_flutter:
   flutter_email_sender:
+  simple_barcode_scanner:
+  qr_code_scanner:
 
 dev_dependencies:
   flutter_test:
