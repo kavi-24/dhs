@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
 
 /*
 android\app\build.gradle:
-
  android {
   defaultConfig {
     minSdkVersion 19
