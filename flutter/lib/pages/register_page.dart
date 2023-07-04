@@ -1,6 +1,7 @@
 import 'package:dhs/models/user_model.dart';
 import 'package:dhs/pages/login_page.dart';
 import 'package:dhs/services/database_helper.dart';
+import 'package:dhs/services/db_mysql.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -17,7 +18,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  final DatabaseHelper _databaseHelper = DatabaseHelper();
+  // final DatabaseHelper _databaseHelper = DatabaseHelper();
+  final Mysql _databaseHelper = Mysql();
   bool? obscureText = true;
 
   @override
@@ -96,8 +98,29 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                bool alreadyPresent = await _databaseHelper.checkUser(
-                    _usernameController.text, _emailController.text);
+                // bool alreadyPresent = await _databaseHelper.checkUser(
+                //     _usernameController.text, _emailController.text);
+                bool alreadyPresent = false;
+                String sql =
+                    "SELECT * FROM users WHERE username = ? OR email = ?";
+                await _databaseHelper.getConnection().then((conn) async {
+                  await conn.query(sql, [
+                    _usernameController.text,
+                    _emailController.text
+                  ]).then((results) {
+                    for (var row in results) {
+                      if (row[1] == _usernameController.text ||
+                          row[2] == _emailController.text) {
+                        alreadyPresent = true;
+                        break;
+                      }
+                    }
+                  }).onError((error, stackTrace) {
+                    print(error);
+                  });
+                  conn.close();
+                });
+
                 if (alreadyPresent) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
@@ -112,13 +135,23 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   );
                 } else {
-                  await _databaseHelper.insertUser(
-                    User(
-                      username: _usernameController.text,
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                    ),
-                  );
+                  await _databaseHelper.getConnection().then((conn) async {
+                    await conn.query(
+                        'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
+                        [
+                          _usernameController.text,
+                          _emailController.text,
+                          _passwordController.text
+                        ]);
+                    conn.close();
+                  });
+                  // await _databaseHelper.insertUser(
+                  //   User(
+                  //     username: _usernameController.text,
+                  //     email: _emailController.text,
+                  //     password: _passwordController.text,
+                  //   ),
+                  // );
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text("User registered successfully"),
@@ -153,4 +186,43 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
+  // showFutureDBData() {
+  // return FutureBuilder<List<UserModel>>(
+  //   future: getmySQLData(),
+  //   builder: (BuildContext context, snapshot) {
+  //     if (snapshot.connectionState == ConnectionState.waiting) {
+  //       return const CircularProgressIndicator();
+
+  //     } else if (snapshot.hasError) {
+
+  //       return Text(snapshot.error.toString());
+
+  //     }
+
+  //     return ListView.builder(
+
+  //       itemCount: snapshot.data!.length,
+
+  //       itemBuilder: (context, index) {
+
+  //         final user = snapshot.data![index];
+
+  //         return ListTile(
+
+  //           leading: Text(user.userId),
+
+  //           title: Text(user.username),
+
+  //           subtitle: Text(user.email),
+
+  //         );
+
+  //       },
+
+  //     );
+
+  //   },
+
+  // );
+  // }
 }

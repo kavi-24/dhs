@@ -42,6 +42,7 @@ dependencies:
   flutter_email_sender:
   simple_barcode_scanner:
   qr_code_scanner:
+  mysql1:
 
 dev_dependencies:
   flutter_test:
